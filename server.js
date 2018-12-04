@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const body_parser = require("body-parser");
 
 //you want to put the models here!
 const users = require("./routes/api/users");
@@ -9,12 +10,21 @@ const profile = require("./routes/api/profiles");
 //initialize the app with express
 const app = express();
 
+app.use(body_parser.urlencoded({ extended: false }));
+app.use(body_parser.json());
+
 //get the mongo key!
 const db = require("./config/keys").mongoURI;
 
 //connect to the database with the key!
+// with useNewUrlParser : true
+// we can make sure that we use new versions
+//of the body parser.
 mongoose
-  .connect(db)
+  .connect(
+    db,
+    { useNewUrlParser: true }
+  )
   .then(() => console.log("mongo db connected"))
   .catch(err => console.log(err));
 
