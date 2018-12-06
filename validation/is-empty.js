@@ -1,3 +1,5 @@
+//check to see if it's empty or not!!
+
 const isEmpty = value =>
   value === undefined ||
   value === null ||
