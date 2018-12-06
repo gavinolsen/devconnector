@@ -274,5 +274,94 @@ router.post(
   }
 );
 
+/**
+ * @route   DELETE api/profile/experience/:exp_id
+ * @desc    delete experience fom a profile
+ * @access  Private
+ */
+router.delete(
+  "/experience/:exp_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        //ger the index to remove
+        const removeIndex = profile.experience
+          .map(item => item.id)
+          .indexOf(req.params.exp_id);
+        //now we want to splice the array
+        profile.experience.splice(removeIndex, 1);
+
+        profile.save().then(profile => res.json(profile));
+      })
+      .catch(err => res.json(err));
+  }
+);
+
+/**
+ * @route   DELETE api/profile/education/:edu_id
+ * @desc    delete education fom a profile
+ * @access  Private
+ */
+router.delete(
+  "/education/:edu_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        //ger the index to remove
+        const removeIndex = profile.education
+          .map(item => item.id)
+          .indexOf(req.params.edu_id);
+        //now we want to splice the array
+        profile.education.splice(removeIndex, 1);
+
+        profile.save().then(profile => res.json(profile));
+      })
+      .catch(err => res.json(err));
+  }
+);
+
+/**
+ * @route   DELETE api/profile/education/:edu_id
+ * @desc    delete education fom a profile
+ * @access  Private
+ */
+router.delete(
+  "/",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOneAndRemove({ user: req.user.id }).then(() => {
+      User.findOneAndRemove({ _id: req.user.id }).then(() =>
+        res.json({ success: true })
+      );
+    });
+  }
+);
+
+/**
+ * @route   DELETE api/profile/education/:edu_id
+ * @desc    delete education fom a profile
+ * @access  Private
+ */
+router.delete(
+  "/education/:edu_id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    Profile.findOne({ user: req.user.id })
+      .then(profile => {
+        //ger the index to remove
+        const removeIndex = profile.education
+          .map(item => item.id)
+          .indexOf(req.params.edu_id);
+        //now we want to splice the array
+        profile.education.splice(removeIndex, 1);
+
+        profile.save().then(profile => res.json(profile));
+      })
+      .catch(err => res.json(err));
+  }
+);
+
 //we have to export this module in order for the router to pick it up
 module.exports = router;
