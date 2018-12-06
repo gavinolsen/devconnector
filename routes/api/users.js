@@ -9,6 +9,7 @@ const keys = require("../../config/keys");
 
 //load the input validation!!!
 const validateRegisterInput = require("../../validation/register");
+const validateLoginInput = require("../../validation/login");
 
 //bring in the user model
 const User = require("../../models/User");
@@ -41,16 +42,19 @@ router.get("/test", (req, res) =>
 //with this line of code from server.js
 // -->
 router.post("/register", (req, res) => {
+  //get the values given by the function we made
   const { errors, isValid } = validateRegisterInput(req.body);
 
-  //check to see if validation passed
+  //check to see if validation passed. this is
+  //our custom validation from the file we made
   if (!isValid) {
     return res.status(400).json(errors);
   }
 
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
-      return res.status(400).json({ email: "email already exists" });
+      errors.email = "Email already exists";
+      return res.status(400).json(errors);
     } else {
       //this is what we are using for the pictures
       const avatar = gravatar.url(req.body.email, {
@@ -94,13 +98,23 @@ router.post("/register", (req, res) => {
  */
 
 router.post("/login", (req, res) => {
+  //get the values given by the function we made
+  const { errors, isValid } = validateLoginInput(req.body);
+
+  //check to see if validation passed. this is
+  //our custom validation from the file we made
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   const email = req.body.email;
   const password = req.body.password;
 
   //find the user by their email
   User.findOne({ email }).then(user => {
     if (!user) {
-      return res.status(404).json({ email: "user not found" });
+      errors.email = "user not found";
+      return res.status(404).json(errors);
     }
 
     //check password!
@@ -125,7 +139,8 @@ router.post("/login", (req, res) => {
           });
         });
       } else {
-        return res.status(400).json({ password: "Password incorrect" });
+        errors.password = "incorrect password";
+        return res.status(400).json(errors);
       }
     });
   });

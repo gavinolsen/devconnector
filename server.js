@@ -6,7 +6,7 @@ const passport = require("passport");
 //you want to put the models here!
 const users = require("./routes/api/users");
 const posts = require("./routes/api/posts");
-const profile = require("./routes/api/profiles");
+const profile = require("./routes/api/profile");
 
 //initialize the app with express
 const app = express();
