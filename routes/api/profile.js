@@ -326,6 +326,9 @@ router.delete(
  * @route   DELETE api/profile/education/:edu_id
  * @desc    delete education fom a profile
  * @access  Private
+ *
+ * the way this is done, you don't need an id to put in!
+ * it just deletes whatever user is logged in
  */
 router.delete(
   "/",
