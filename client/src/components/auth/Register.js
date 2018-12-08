@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import classnames from 'classnames';
 
 class Register extends Component {
   constructor() {
@@ -31,10 +33,15 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    console.log(newUser);
+    axios
+      .post('/api/users/register', newUser)
+      .then(res => console.log(res.data))
+      .catch(err => this.setState({ errors: err.response.data }));
   };
 
   render() {
+    const { errors } = this.state;
+
     return (
       //<!-- Register -->
       <div className='register'>
@@ -49,7 +56,9 @@ class Register extends Component {
                 <div className='form-group'>
                   <input
                     type='text'
-                    className='form-control form-control-lg'
+                    className={classnames('form-control form-control-lg', {
+                      'is-invalid': errors.name
+                    })}
                     placeholder='Name'
                     name='name'
                     value={this.state.name}
@@ -59,7 +68,9 @@ class Register extends Component {
                 <div className='form-group'>
                   <input
                     type='email'
-                    className='form-control form-control-lg'
+                    className={classnames('form-control form-control-lg', {
+                      'is-invalid': errors.name
+                    })}
                     placeholder='Email Address'
                     value={this.state.email}
                     name='email'
@@ -73,7 +84,9 @@ class Register extends Component {
                 <div className='form-group'>
                   <input
                     type='password'
-                    className='form-control form-control-lg'
+                    className={classnames('form-control form-control-lg', {
+                      'is-invalid': errors.name
+                    })}
                     placeholder='Password'
                     name='password'
                     value={this.state.password}
@@ -83,7 +96,9 @@ class Register extends Component {
                 <div className='form-group'>
                   <input
                     type='password'
-                    className='form-control form-control-lg'
+                    className={classnames('form-control form-control-lg', {
+                      'is-invalid': errors.password2
+                    })}
                     placeholder='Confirm Password'
                     name='password2'
                     value={this.state.password2}
