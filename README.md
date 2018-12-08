@@ -1,7 +1,7 @@
-This is an app that I made for a udemy course.
+This is an app that I made for a udemy course.<br />
+<br />
+In this app, I learned how to<br />
 
-In this app, I learned how to
-
-/n--> make an extensive model in mongoose
---> connect the model to the api with get, post, delete requests
---> integrate that data with react components
+--> make an extensive model in mongoose <br/>
+--> connect the model to the api with get, post, delete requests <br />
+--> integrate that data with react components<br />
