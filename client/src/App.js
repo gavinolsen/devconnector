@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+import setAuthToken from './utils/setAuthToken';
+import { setCurrentUser } from './actions/authActions';
 
 //redux wrapper
 import { Provider } from 'react-redux';
@@ -12,6 +15,18 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 
 import './App.css';
+
+//check for the token
+//this functionality makes it so that you're
+//always logged in! unless you log out of course
+if (localStorage.jwtToken) {
+  //set the auth header token
+  setAuthToken(localStorage.jwtToken);
+  //decode token and get user info
+  const decoded = jwt_decode(localStorage.jwtToken);
+  //set user and isAuthenticated
+  store.dispatch(setCurrentUser(decoded));
+}
 
 class App extends Component {
   render() {
