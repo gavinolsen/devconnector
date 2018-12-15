@@ -23,7 +23,7 @@ class Navbar extends Component {
         </Link>
         <li className='nav-item'>
           <a
-            href='#'
+            href='/'
             onClick={this.onLogoutClick.bind(this)}
             className='nav-link'
           >
