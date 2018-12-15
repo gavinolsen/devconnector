@@ -19,7 +19,8 @@ import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/create-profile/CreateProfile';
 import EditProfile from './components/edit-profile/EditProfile';
-
+import AddExperience from './components/add-credentials/AddExperience';
+import AddEducation from './components/add-credentials/AddEducation';
 import './App.css';
 
 //check for the token
@@ -48,7 +49,7 @@ if (localStorage.jwtToken) {
 class App extends Component {
   render() {
     return (
-      //comes from store.js
+      //comes from store.s
       <Provider store={store}>
         <Router>
           <div className='App'>
@@ -72,6 +73,20 @@ class App extends Component {
                   exact
                   path='/edit-profile'
                   component={EditProfile}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path='/add-experience'
+                  component={AddExperience}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path='/add-education'
+                  component={AddEducation}
                 />
               </Switch>
             </div>
